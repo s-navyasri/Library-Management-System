@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Library Management System{% endblock %}
+
+{% block content %}
+    <h1>Dashboard</h1>
+    <p class="subtitle">Overview of your library at a glance.</p>
+
+    <div class="card-grid">
+        <div class="stat-card">
+            <div class="stat-number">{{ stats.total_titles }}</div>
+            <div class="stat-label">Book Titles</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{ stats.total_books }}</div>
+            <div class="stat-label">Total Copies</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{ stats.total_members }}</div>
+            <div class="stat-label">Members</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">{{ stats.issued_count }}</div>
+            <div class="stat-label">Books Issued</div>
+        </div>
+        <div class="stat-card {{ 'stat-alert' if stats.overdue_count > 0 else '' }}">
+            <div class="stat-number">{{ stats.overdue_count }}</div>
+            <div class="stat-label">Overdue Books</div>
+        </div>
+        <div class="stat-card {{ 'stat-alert' if stats.pending_dues > 0 else '' }}">
+            <div class="stat-number">Rs. {{ "%.2f"|format(stats.pending_dues) }}</div>
+            <div class="stat-label">Pending Dues</div>
+        </div>
+        <div class="stat-card stat-success">
+            <div class="stat-number">Rs. {{ "%.2f"|format(stats.total_collected) }}</div>
+            <div class="stat-label">Fines Collected</div>
+        </div>
+    </div>
+
+    <div class="quick-links">
+        <a class="btn" href="{{ url_for('add_book') }}">+ Add New Book</a>
+        <a class="btn" href="{{ url_for('add_member') }}">+ Add New Member</a>
+        <a class="btn" href="{{ url_for('issue_book') }}">Issue a Book</a>
+        <a class="btn secondary" href="{{ url_for('payments') }}">View Payments</a>
+    </div>
+{% endblock %}

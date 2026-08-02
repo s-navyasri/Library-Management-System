@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Issue Book - Library Management System{% endblock %}
+
+{% block content %}
+    <h1>Issue a Book</h1>
+    <p class="subtitle">Loan period: {{ loan_days }} days. Late returns are charged a fine automatically.</p>
+
+    {% if books|length == 0 %}
+        <p class="empty">No books are currently available to issue.</p>
+    {% elif members|length == 0 %}
+        <p class="empty">Please add a member before issuing a book.</p>
+    {% else %}
+    <form class="form-card" method="post" action="{{ url_for('issue_book') }}">
+        <label for="book_id">Select Book *</label>
+        <select id="book_id" name="book_id" required>
+            {% for book in books %}
+                <option value="{{ book.id }}">{{ book.title }} (Available: {{ book.available }})</option>
+            {% endfor %}
+        </select>
+
+        <label for="member_id">Select Member *</label>
+        <select id="member_id" name="member_id" required>
+            {% for member in members %}
+                <option value="{{ member.id }}">{{ member.name }}</option>
+            {% endfor %}
+        </select>
+
+        <div class="form-actions">
+            <button type="submit" class="btn">Issue Book</button>
+            <a class="btn secondary" href="{{ url_for('index') }}">Cancel</a>
+        </div>
+    </form>
+    {% endif %}
+{% endblock %}

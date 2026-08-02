@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In - Library Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="auth-body">
+
+    <div class="auth-page" style="background-image: url('{{ url_for('static', filename='images/library-bg.jpg') }}');">
+        <div class="auth-overlay"></div>
+
+        <div class="auth-wrapper">
+            <div class="auth-card">
+                <div class="auth-brand">
+                    <span class="auth-logo">📚</span>
+                    <h1>Library Management System</h1>
+                    <p class="auth-subtitle">Sign in to manage books, members and issued copies.</p>
+                </div>
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="flash {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <form method="POST" action="{{ url_for('login') }}" class="auth-form">
+                    <label for="username">Username or Email</label>
+                    <input type="text" id="username" name="username" placeholder="e.g. jane_doe" required autofocus>
+
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+                    <button type="submit" class="btn auth-submit">Log In</button>
+                </form>
+
+                <p class="auth-switch">
+                    Don't have an account? <a href="{{ url_for('register') }}">Create one</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

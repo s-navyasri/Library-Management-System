@@ -1,0 +1,614 @@
+/* ---------------------------------------------------
+   Library Management System - Stylesheet
+--------------------------------------------------- */
+
+:root {
+    --primary: #2f5233;
+    --primary-light: #4a7c59;
+    --accent: #d9a441;
+    --bg: #f5f7f2;
+    --card-bg: #ffffff;
+    --text: #232323;
+    --muted: #6b6b6b;
+    --danger: #b3261e;
+    --success: #1e6b3e;
+    --border: #e2e2e2;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+}
+
+/* ---------------- Navbar ---------------- */
+.navbar {
+    background-color: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 32px;
+    flex-wrap: wrap;
+}
+
+.nav-brand {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    margin-left: 22px;
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+.nav-links a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+.nav-user {
+    color: white;
+    margin-left: 22px;
+    font-size: 0.9rem;
+    opacity: 0.85;
+}
+
+.nav-logout {
+    color: white;
+    text-decoration: none;
+    margin-left: 14px;
+    font-size: 0.9rem;
+    background-color: rgba(255, 255, 255, 0.15);
+    padding: 6px 12px;
+    border-radius: 6px;
+}
+
+.nav-logout:hover {
+    background-color: rgba(255, 255, 255, 0.28);
+    text-decoration: none;
+}
+
+/* ---------------- Layout ---------------- */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 30px 20px 60px;
+}
+
+.footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+    padding: 20px;
+}
+
+h1 {
+    margin-bottom: 4px;
+    color: var(--primary);
+}
+
+.subtitle {
+    color: var(--muted);
+    margin-top: 0;
+    margin-bottom: 24px;
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+/* ---------------- Flash Messages ---------------- */
+.flash {
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+}
+
+.flash.success {
+    background-color: #e3f3e6;
+    color: var(--success);
+    border: 1px solid #b7ddc0;
+}
+
+.flash.error {
+    background-color: #fbe9e7;
+    color: var(--danger);
+    border: 1px solid #f0c4bf;
+}
+
+/* ---------------- Buttons ---------------- */
+.btn {
+    display: inline-block;
+    background-color: var(--primary);
+    color: white;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn:hover {
+    background-color: var(--primary-light);
+}
+
+.btn.secondary {
+    background-color: #888;
+}
+
+.btn.secondary:hover {
+    background-color: #666;
+}
+
+.link-btn {
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 0.88rem;
+    margin-right: 10px;
+}
+
+.link-btn.danger {
+    color: var(--danger);
+}
+
+.link-btn:hover {
+    text-decoration: underline;
+}
+
+/* ---------------- Dashboard Cards ---------------- */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 18px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.stat-label {
+    color: var(--muted);
+    margin-top: 6px;
+    font-size: 0.9rem;
+}
+
+.quick-links {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+/* ---------------- Tables ---------------- */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.data-table th, .data-table td {
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.92rem;
+}
+
+.data-table th {
+    background-color: var(--primary);
+    color: white;
+    font-weight: 600;
+}
+
+.data-table tr:hover {
+    background-color: #f0f5f1;
+}
+
+.empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 20px;
+}
+
+/* ---------------- Badges ---------------- */
+.badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge.success {
+    background-color: #e3f3e6;
+    color: var(--success);
+}
+
+.badge.danger {
+    background-color: #fbe9e7;
+    color: var(--danger);
+}
+
+/* ---------------- Search Bar ---------------- */
+.search-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+/* ---------------- Forms ---------------- */
+.form-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 26px;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.form-card label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    margin-top: 14px;
+    color: var(--text);
+}
+
+.form-card input,
+.form-card select {
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.92rem;
+}
+
+.form-actions {
+    margin-top: 24px;
+    display: flex;
+    gap: 12px;
+}
+
+/* ---------------------------------------------------
+   Login / Register Pages
+   To use a real photograph instead of the generated
+   illustration, just replace the file at:
+   static/images/library-bg.jpg  (same filename/size works)
+--------------------------------------------------- */
+
+.auth-body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.auth-page {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.auth-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(10, 14, 12, 0.78) 0%,
+        rgba(20, 24, 20, 0.55) 55%,
+        rgba(10, 14, 12, 0.78) 100%
+    );
+}
+
+.auth-wrapper {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.auth-card {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(6px);
+    border-radius: 16px;
+    padding: 40px 36px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    animation: authFadeIn 0.4s ease-out;
+}
+
+@keyframes authFadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.auth-brand {
+    text-align: center;
+    margin-bottom: 22px;
+}
+
+.auth-logo {
+    font-size: 2.4rem;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.auth-brand h1 {
+    font-size: 1.35rem;
+    margin: 0 0 6px;
+    color: var(--primary);
+}
+
+.auth-subtitle {
+    color: var(--muted);
+    font-size: 0.88rem;
+    margin: 0;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-form label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 14px;
+    margin-bottom: 6px;
+    color: var(--text);
+}
+
+.auth-form input {
+    padding: 11px 13px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.94rem;
+}
+
+.auth-form input:focus {
+    outline: none;
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.15);
+}
+
+.auth-submit {
+    margin-top: 22px;
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+    font-size: 0.98rem;
+    font-weight: 600;
+}
+
+.auth-switch {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 0;
+    font-size: 0.88rem;
+    color: var(--muted);
+}
+
+.auth-switch a {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+/* ---------------- Extra badges & stat variants ---------------- */
+.badge.warning {
+    background-color: #fdf3d8;
+    color: #8a6400;
+}
+
+.stat-card.stat-alert {
+    border-color: var(--danger);
+    background-color: #fff5f4;
+}
+
+.stat-card.stat-alert .stat-number {
+    color: var(--danger);
+}
+
+.stat-card.stat-success .stat-number {
+    color: var(--success);
+}
+
+.section-title {
+    margin-top: 36px;
+    margin-bottom: 14px;
+    color: var(--primary);
+    font-size: 1.15rem;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 8px;
+}
+
+.link-btn.pay {
+    color: var(--success);
+    font-weight: 600;
+}
+
+.btn.pay-btn {
+    background-color: var(--success);
+}
+
+.btn.pay-btn:hover {
+    background-color: #164f2e;
+}
+
+code {
+    background-color: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+/* ---------------------------------------------------
+   Payment / Checkout Page
+--------------------------------------------------- */
+.payment-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 26px;
+    align-items: start;
+    margin-top: 20px;
+}
+
+@media (max-width: 720px) {
+    .payment-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.payment-summary {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.payment-summary h3 {
+    margin-top: 0;
+    color: var(--primary);
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.92rem;
+}
+
+.summary-row.total {
+    border-bottom: none;
+    margin-top: 6px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--danger);
+}
+
+.payment-form-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.pay-method-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.pay-tab {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid var(--border);
+    background-color: var(--bg);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--muted);
+    transition: all 0.15s ease-in-out;
+}
+
+.pay-tab.active {
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.pay-panel.hidden {
+    display: none;
+}
+
+.pay-panel label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 14px;
+    margin-bottom: 6px;
+    color: var(--text);
+}
+
+.pay-panel input {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.94rem;
+}
+
+.pay-row {
+    display: flex;
+    gap: 14px;
+}
+
+.pay-row > div {
+    flex: 1;
+}
+
+.muted-note {
+    color: var(--muted);
+    font-size: 0.88rem;
+    margin-top: 14px;
+}
+
+.pay-submit {
+    margin-top: 22px;
+    width: 100%;
+    text-align: center;
+    padding: 13px;
+    font-size: 1rem;
+}

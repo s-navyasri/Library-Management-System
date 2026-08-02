@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Transactions - Library Management System{% endblock %}
+
+{% block content %}
+    <h1>Issue / Return Records</h1>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Book</th>
+                <th>Member</th>
+                <th>Issue Date</th>
+                <th>Due Date</th>
+                <th>Return Date</th>
+                <th>Status</th>
+                <th>Fine</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in transactions %}
+            <tr>
+                <td>{{ t.book_title }}</td>
+                <td>{{ t.member_name }}</td>
+                <td>{{ t.issue_date }}</td>
+                <td>{{ t.due_date }}</td>
+                <td>{{ t.return_date or "-" }}</td>
+                <td>
+                    {% if t.status == "Issued" and t.due_date < today %}
+                        <span class="badge danger">Overdue</span>
+                    {% elif t.status == "Issued" %}
+                        <span class="badge warning">Issued</span>
+                    {% else %}
+                        <span class="badge success">Returned</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if t.fine_amount and t.fine_amount > 0 %}
+                        Rs. {{ "%.2f"|format(t.fine_amount) }}
+                        {% if t.fine_paid %}
+                            <span class="badge success">Paid</span>
+                        {% else %}
+                            <span class="badge danger">Pending</span>
+                        {% endif %}
+                    {% else %}
+                        &mdash;
+                    {% endif %}
+                </td>
+                <td class="actions">
+                    {% if t.status == "Issued" %}
+                        <a class="link-btn" href="{{ url_for('return_book', transaction_id=t.id) }}"
+                           onclick="return confirm('Mark this book as returned?');">Mark Returned</a>
+                    {% elif t.fine_amount and t.fine_amount > 0 and not t.fine_paid %}
+                        <a class="link-btn pay" href="{{ url_for('pay_fine', transaction_id=t.id) }}">Pay Now</a>
+                    {% else %}
+                        &mdash;
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="8" class="empty">No transactions yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

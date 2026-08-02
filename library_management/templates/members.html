@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Members - Library Management System{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>All Members</h1>
+        <a class="btn" href="{{ url_for('add_member') }}">+ Add Member</a>
+    </div>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Pending Dues</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in members %}
+            <tr>
+                <td>{{ member.name }}</td>
+                <td>{{ member.email or "-" }}</td>
+                <td>{{ member.phone or "-" }}</td>
+                <td>
+                    {% if member.pending_dues and member.pending_dues > 0 %}
+                        <span class="badge danger">Rs. {{ "%.2f"|format(member.pending_dues) }}</span>
+                    {% else %}
+                        <span class="badge success">Clear</span>
+                    {% endif %}
+                </td>
+                <td class="actions">
+                    {% if member.pending_dues and member.pending_dues > 0 %}
+                        <a class="link-btn pay" href="{{ url_for('payments', member_id=member.id) }}">Pay</a>
+                    {% endif %}
+                    <a class="link-btn" href="{{ url_for('payments', member_id=member.id) }}">Add Charge</a>
+                    <a class="link-btn danger" href="{{ url_for('delete_member', member_id=member.id) }}"
+                       onclick="return confirm('Delete this member?');">Delete</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5" class="empty">No members found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

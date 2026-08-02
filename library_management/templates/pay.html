@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block title %}{{ heading }} - Library Management System{% endblock %}
+
+{% block content %}
+    <h1>{{ heading }}</h1>
+    <p class="subtitle">Secure checkout for {{ member_name }}. (Demo payment flow — no real card is charged.)</p>
+
+    <div class="payment-layout">
+
+        <div class="payment-summary">
+            <h3>Order Summary</h3>
+            {% for label, value in summary_rows %}
+            <div class="summary-row">
+                <span>{{ label }}</span>
+                <span>{{ value }}</span>
+            </div>
+            {% endfor %}
+            <div class="summary-row total">
+                <span>Amount Due</span>
+                <span>Rs. {{ "%.2f"|format(amount) }}</span>
+            </div>
+        </div>
+
+        <div class="payment-form-card">
+            <div class="pay-method-tabs">
+                <button type="button" class="pay-tab active" data-method="card">Card</button>
+                <button type="button" class="pay-tab" data-method="upi">UPI</button>
+                <button type="button" class="pay-tab" data-method="cash">Cash / Counter</button>
+            </div>
+
+            <form method="POST" action="{{ action_url }}" id="payForm">
+                <input type="hidden" name="method" id="methodInput" value="card">
+
+                <div class="pay-panel" id="panel-card">
+                    <label for="card_name">Cardholder Name</label>
+                    <input type="text" id="card_name" name="card_name" placeholder="Name on card">
+
+                    <label for="card_number">Card Number</label>
+                    <input type="text" id="card_number" name="card_number" placeholder="1234 5678 9012 3456"
+                           maxlength="19" inputmode="numeric">
+
+                    <div class="pay-row">
+                        <div>
+                            <label for="expiry">Expiry</label>
+                            <input type="text" id="expiry" name="expiry" placeholder="MM/YY" maxlength="5">
+                        </div>
+                        <div>
+                            <label for="cvv">CVV</label>
+                            <input type="password" id="cvv" name="cvv" placeholder="123" maxlength="4">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pay-panel hidden" id="panel-upi">
+                    <label for="upi_id">UPI ID</label>
+                    <input type="text" id="upi_id" name="upi_id" placeholder="yourname@upi">
+                </div>
+
+                <div class="pay-panel hidden" id="panel-cash">
+                    <p class="muted-note">Select this option if the member is paying in person at the counter.
+                    Clicking "Confirm Payment" will record it as a cash payment.</p>
+                </div>
+
+                <button type="submit" class="btn auth-submit pay-submit">
+                    Pay Rs. {{ "%.2f"|format(amount) }}
+                </button>
+                <a class="btn secondary" href="{{ url_for('payments') }}" style="display:block; margin-top:10px; text-align:center;">Cancel</a>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const tabs = document.querySelectorAll(".pay-tab");
+        const panels = { card: document.getElementById("panel-card"),
+                          upi: document.getElementById("panel-upi"),
+                          cash: document.getElementById("panel-cash") };
+        const methodInput = document.getElementById("methodInput");
+
+        tabs.forEach(tab => {
+            tab.addEventListener("click", () => {
+                tabs.forEach(t => t.classList.remove("active"));
+                tab.classList.add("active");
+                const method = tab.dataset.method;
+                methodInput.value = method;
+                Object.keys(panels).forEach(key => {
+                    panels[key].classList.toggle("hidden", key !== method);
+                });
+            });
+        });
+
+        // Auto-format card number with spaces every 4 digits
+        const cardNumberInput = document.getElementById("card_number");
+        if (cardNumberInput) {
+            cardNumberInput.addEventListener("input", (e) => {
+                let digits = e.target.value.replace(/\D/g, "").slice(0, 16);
+                e.target.value = digits.replace(/(.{4})/g, "$1 ").trim();
+            });
+        }
+
+        // Auto-format expiry as MM/YY
+        const expiryInput = document.getElementById("expiry");
+        if (expiryInput) {
+            expiryInput.addEventListener("input", (e) => {
+                let digits = e.target.value.replace(/\D/g, "").slice(0, 4);
+                if (digits.length >= 3) {
+                    e.target.value = digits.slice(0, 2) + "/" + digits.slice(2);
+                } else {
+                    e.target.value = digits;
+                }
+            });
+        }
+    </script>
+{% endblock %}

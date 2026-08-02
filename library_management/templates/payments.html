@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block title %}Payments - Library Management System{% endblock %}
+
+{% block content %}
+    <h1>Payments</h1>
+    <p class="subtitle">Collect book fines, bill members directly, and review payment history.</p>
+
+    <h2 class="section-title">Bill a Member</h2>
+    <form class="form-card charge-form" method="post" action="{{ url_for('add_charge') }}">
+        <label for="member_id">Member *</label>
+        <select id="member_id" name="member_id" required>
+            <option value="" disabled {{ "selected" if not preselect_member_id else "" }}>Select a member...</option>
+            {% for m in all_members %}
+                <option value="{{ m.id }}" {{ "selected" if preselect_member_id == m.id else "" }}>{{ m.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="description">Description *</label>
+        <input type="text" id="description" name="description" placeholder="e.g. Membership fee, Damaged book fee" required>
+
+        <label for="amount">Amount (Rs.) *</label>
+        <input type="number" id="amount" name="amount" min="1" step="0.01" placeholder="e.g. 200" required>
+
+        <div class="form-actions">
+            <button type="submit" class="btn">Add Charge</button>
+        </div>
+    </form>
+
+    <h2 class="section-title">Pending Book Fines</h2>
+    {% if pending_fines|length == 0 %}
+        <p class="empty">No pending book fines.</p>
+    {% else %}
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Book</th>
+                <th>Member</th>
+                <th>Due Date</th>
+                <th>Returned On</th>
+                <th>Fine Amount</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in pending_fines %}
+            <tr>
+                <td>{{ d.book_title }}</td>
+                <td>{{ d.member_name }}</td>
+                <td>{{ d.due_date }}</td>
+                <td>{{ d.return_date or "-" }}</td>
+                <td>Rs. {{ "%.2f"|format(d.fine_amount) }}</td>
+                <td class="actions">
+                    <a class="btn pay-btn" href="{{ url_for('pay_fine', transaction_id=d.transaction_id) }}">Pay Now</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    <h2 class="section-title">Pending Charges</h2>
+    {% if pending_charges|length == 0 %}
+        <p class="empty">No pending charges.</p>
+    {% else %}
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Member</th>
+                <th>Billed On</th>
+                <th>Amount</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in pending_charges %}
+            <tr>
+                <td>{{ c.description }}</td>
+                <td>{{ c.member_name }}</td>
+                <td>{{ c.created_at }}</td>
+                <td>Rs. {{ "%.2f"|format(c.amount) }}</td>
+                <td class="actions">
+                    <a class="btn pay-btn" href="{{ url_for('pay_charge', charge_id=c.charge_id) }}">Pay Now</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    <h2 class="section-title">Payment History</h2>
+    {% if payment_history|length == 0 %}
+        <p class="empty">No payments have been made yet.</p>
+    {% else %}
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Reference No.</th>
+                <th>Description</th>
+                <th>Member</th>
+                <th>Amount</th>
+                <th>Method</th>
+                <th>Status</th>
+                <th>Paid At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in payment_history %}
+            <tr>
+                <td><code>{{ p.reference_no }}</code></td>
+                <td>{{ p.description }}</td>
+                <td>{{ p.member_name }}</td>
+                <td>Rs. {{ "%.2f"|format(p.amount) }}</td>
+                <td>
+                    {% if p.method == "card" %}
+                        Card •••• {{ p.card_last4 }}
+                    {% else %}
+                        {{ p.method|upper }}
+                    {% endif %}
+                </td>
+                <td><span class="badge success">{{ p.status }}</span></td>
+                <td>{{ p.paid_at }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+{% endblock %}
